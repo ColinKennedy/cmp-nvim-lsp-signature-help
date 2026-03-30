@@ -137,7 +137,6 @@ source._docs = function(self, signature, parameter_index)
   local parameter = signature.parameters[parameter_index]
   if parameter then
     if parameter.documentation then
-      table.insert(documentation, '---')
       if type(parameter.documentation) == 'table' then
         table.insert(documentation, '```' .. parameter.documentation.kind)
         table.insert(documentation, parameter.documentation.value)
@@ -150,7 +149,6 @@ source._docs = function(self, signature, parameter_index)
 
   -- signature docs.
   if signature.documentation then
-    table.insert(documentation, '---')
     if type(signature.documentation) == 'table' then
       table.insert(documentation, '```' .. signature.documentation.kind)
       table.insert(documentation, signature.documentation.value)
@@ -169,7 +167,7 @@ source._signature_label = function(self, signature, parameter_index)
     local s, e = string.find(label, self:_parameter_label(signature, signature.parameters[parameter_index]), 1, true)
     if s and e then
       local active = string.sub(label, s, e)
-      label = string.gsub(label, vim.pesc(active), '***' .. active .. '***')
+      label = string.gsub(label, vim.pesc(active), '`' .. active .. '`')
     end
   end
   return label
