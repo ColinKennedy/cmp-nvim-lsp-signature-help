@@ -59,7 +59,7 @@ source.complete = function(self, params, callback)
     isRetrigger = not not self.signature_help,
     activeSignatureHelp = self.signature_help,
   }
-  client.request('textDocument/signatureHelp', request, function(_, signature_help)
+  client:request('textDocument/signatureHelp', request, function(_, signature_help)
     self.signature_help = signature_help
 
     if not signature_help then
@@ -179,8 +179,8 @@ source._parameter_label = function(_, signature, parameter)
   local label = parameter.label
   if type(label) == 'table' then
     label = signature.label:sub(
-      1 + vim.str_byteindex(signature.label, label[1]),
-      vim.str_byteindex(signature.label, label[2])
+      1 + vim.str_byteindex(signature.label, "utf-8", label[1], false),
+      vim.str_byteindex(signature.label, "utf-8", label[2], false)
     )
   end
   return label
